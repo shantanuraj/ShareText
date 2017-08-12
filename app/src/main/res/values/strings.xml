@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ShareText</string>
+    <string name="button_init">Initialize</string>
+</resources>
