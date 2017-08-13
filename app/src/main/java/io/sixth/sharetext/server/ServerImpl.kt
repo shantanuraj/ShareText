@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import io.sixth.sharetext.R
+import io.sixth.sharetext.data.JsonText
 import io.sixth.sharetext.data.Text
 
 /**
@@ -22,7 +23,8 @@ class ServerImpl constructor(val act: AppCompatActivity) : Server {
     }
 
     override fun start(texts: List<Text>) {
-        server.get("/texts", { _, response -> response.send(texts.toString()) })
+        val jsonTexts = JsonText.parse(texts)
+        server.get("/texts", { _, response -> response.send(jsonTexts) })
         server.listen(PORT)
         isActive = true
 
