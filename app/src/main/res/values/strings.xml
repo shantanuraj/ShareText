@@ -2,5 +2,5 @@
     <string name="app_name">ShareText</string>
     <string name="button_init_start">Start</string>
     <string name="button_init_stop">Stop</string>
-    <string name="text_banner">Start SMS server</string>
+    <string name="text_banner_prompt">Start SMS server</string>
 </resources>

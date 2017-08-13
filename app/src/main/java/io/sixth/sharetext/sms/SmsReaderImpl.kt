@@ -8,19 +8,21 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.sixth.sharetext.data.Text
-import io.sixth.sharetext.server.Server
+import io.sixth.sharetext.view.MainView
 
 /**
  * Created by eve on 13/08/17.
  */
-class SmsReaderImpl constructor(val act: AppCompatActivity,
-                                val server: Server) : SmsReader {
+class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
 
     val APP_REQUEST_READ_SMS: Int = 0x100
     // Cursor position constants
     val CURSOR_SENDER   = 0
     val CURSOR_DATE     = 1
     val CURSOR_BODY     = 2
+    // Callback for sms permission grant action
+    var cb: () -> Unit = {}
+
 
     override fun hasSMSPermission(): Boolean {
         val permissionCheck =
@@ -28,11 +30,12 @@ class SmsReaderImpl constructor(val act: AppCompatActivity,
         return permissionCheck == PackageManager.PERMISSION_GRANTED
     }
 
-    override fun requestSMSPermission() {
+    override fun requestSMSPermission(cb: () -> Unit) {
+        this.cb = cb
         if (!hasSMSPermission()) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(act,
                     Manifest.permission.READ_SMS)) {
-                Toast.makeText(act, "For reading SMS", Toast.LENGTH_LONG).show()
+                Toast.makeText(act, "Allow permission to read SMS", Toast.LENGTH_LONG).show()
             } else {
                 ActivityCompat.requestPermissions(act,
                         arrayOf(Manifest.permission.READ_SMS),
@@ -56,11 +59,11 @@ class SmsReaderImpl constructor(val act: AppCompatActivity,
     }
 
     override fun onSMSPermissionGrant() {
-        server.start(getTexts())
+        cb()
     }
 
     override fun onSMSPermissionReject() {
-        Toast.makeText(act, "SMS Permission denied", Toast.LENGTH_LONG).show()
+        Toast.makeText(act, "SMS permission denied", Toast.LENGTH_LONG).show()
     }
 
     override fun getTexts(): List<Text> {

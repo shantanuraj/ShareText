@@ -7,7 +7,7 @@ import io.sixth.sharetext.data.Text
  */
 interface SmsReader {
     fun hasSMSPermission(): Boolean
-    fun requestSMSPermission()
+    fun requestSMSPermission(cb: () -> Unit)
     fun requestSMSPermissionResult(requestCode: Int, permissions: Array<out String>,
                                    grantResults: IntArray)
     fun onSMSPermissionGrant()

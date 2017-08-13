@@ -12,34 +12,25 @@ import io.sixth.sharetext.data.Text
 /**
  * Created by eve on 13/08/17.
  */
-class ServerImpl constructor(val act: AppCompatActivity) : Server {
+class ServerImpl : Server {
 
     val PORT = 3210
-    var isActive = false
-
     val server: AsyncHttpServer = AsyncHttpServer()
+
     var code = ""
+    var isActive = false
 
     init {
         server.get("/", { _, response -> response.send("ShareText server") })
     }
 
-    override fun start(texts: List<Text>) {
+    override fun start(texts: List<Text>): String {
         val jsonTexts = JsonText.parse(texts)
         server.get("/texts", { _, response -> response.send(jsonTexts) })
         server.listen(PORT)
         isActive = true
-
-        val view = act.findViewById<View>(R.id.main_root_view)
-
-        Snackbar.make(view,
-                "Open https://texts.sixth.io",
-                Snackbar.LENGTH_LONG)
-                .show()
-
         code = RandomCode.code
-
-
+        return code
     }
 
     override fun stop() {

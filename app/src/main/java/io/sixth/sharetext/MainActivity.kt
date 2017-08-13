@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        server = ServerImpl(this)
-        sms = SmsReaderImpl(this, server)
+        server = ServerImpl()
+        sms = SmsReaderImpl(this)
 
         setContentView(R.layout.activity_main)
         mainView = MainViewImpl(this, sms, server)

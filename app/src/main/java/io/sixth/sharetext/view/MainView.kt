@@ -6,4 +6,5 @@ package io.sixth.sharetext.view
 interface MainView {
     fun onInitClick()
     fun onServerStart(code: String)
+    fun showSnackbar(text: String)
 }
