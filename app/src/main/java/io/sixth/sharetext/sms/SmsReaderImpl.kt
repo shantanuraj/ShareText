@@ -57,7 +57,7 @@ class SmsReaderImpl constructor(val act: AppCompatActivity,
     }
 
     override fun onSMSPermissionGrant() {
-        server.start()
+        server.start(getTexts())
     }
 
     override fun onSMSPermissionReject() {
