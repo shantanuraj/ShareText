@@ -15,16 +15,12 @@ import io.sixth.sharetext.sms.SmsReader
 class MainViewImpl constructor(val act: AppCompatActivity,
                                val sms: SmsReader,
                                val server: Server): MainView {
-    val initButton = act.findViewById<Button>(R.id.init_button)!!
     val rootView = act.findViewById<ConstraintLayout>(R.id.main_root_view)!!
+    val initButton = act.findViewById<Button>(R.id.init_button)!!
     val bannerText = act.findViewById<TextView>(R.id.text_banner)!!
 
-    val defaultTextSize: Float
-        get() {
-            return bannerText.textSize / act.resources.displayMetrics.density
-        }
-
     init {
+        bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
         initButton.setOnClickListener { onInitClick() }
     }
 
@@ -35,14 +31,14 @@ class MainViewImpl constructor(val act: AppCompatActivity,
 
     fun stopServer() {
         server.stop()
-        bannerText.textSize = defaultTextSize
+        bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
         bannerText.text = act.getString(R.string.text_banner_prompt)
         initButton.text = act.getString(R.string.button_init_start)
     }
 
     override fun onServerStart(code: String) {
-        bannerText.text = code
         bannerText.textSize = act.resources.getDimension(R.dimen.large_text)
+        bannerText.text = code
         initButton.text = act.getString(R.string.button_init_stop)
         showSnackbar(act.getString(R.string.text_server_start))
     }
