@@ -16,7 +16,6 @@ import io.sixth.sharetext.server.Server
 class SmsReaderImpl constructor(val act: AppCompatActivity,
                                 val server: Server) : SmsReader {
 
-    val TAG = javaClass.canonicalName!!
     val APP_REQUEST_READ_SMS: Int = 0x100
     // Cursor position constants
     val CURSOR_SENDER   = 0

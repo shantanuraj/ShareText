@@ -6,6 +6,7 @@ import android.view.View
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import io.sixth.sharetext.R
 import io.sixth.sharetext.data.JsonText
+import io.sixth.sharetext.data.RandomCode
 import io.sixth.sharetext.data.Text
 
 /**
@@ -17,6 +18,7 @@ class ServerImpl constructor(val act: AppCompatActivity) : Server {
     var isActive = false
 
     val server: AsyncHttpServer = AsyncHttpServer()
+    var code = ""
 
     init {
         server.get("/", { _, response -> response.send("ShareText server") })
@@ -34,11 +36,16 @@ class ServerImpl constructor(val act: AppCompatActivity) : Server {
                 "Open https://texts.sixth.io",
                 Snackbar.LENGTH_LONG)
                 .show()
+
+        code = RandomCode.code
+
+
     }
 
     override fun stop() {
         server.stop()
         isActive = false
+        code = ""
     }
 
     override fun isRunning(): Boolean {
