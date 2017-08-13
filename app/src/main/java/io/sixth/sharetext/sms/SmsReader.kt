@@ -1,4 +1,4 @@
-package io.sixth.sharetext.main
+package io.sixth.sharetext.sms
 
 import io.sixth.sharetext.data.Text
 
@@ -13,5 +13,4 @@ interface SmsReader {
     fun onSMSPermissionGrant()
     fun onSMSPermissionReject()
     fun getTexts(): List<Text>
-    fun startTextServer()
 }

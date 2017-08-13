@@ -1,4 +1,4 @@
-package io.sixth.sharetext.main
+package io.sixth.sharetext.sms
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,14 +6,15 @@ import android.provider.Telephony
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import io.sixth.sharetext.data.Text
+import io.sixth.sharetext.server.Server
 
 /**
  * Created by eve on 13/08/17.
  */
-class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
+class SmsReaderImpl constructor(val act: AppCompatActivity,
+                                val server: Server) : SmsReader {
 
     val TAG = javaClass.canonicalName!!
     val APP_REQUEST_READ_SMS: Int = 0x100
@@ -56,7 +57,7 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
     }
 
     override fun onSMSPermissionGrant() {
-        startTextServer()
+        server.start()
     }
 
     override fun onSMSPermissionReject() {
@@ -87,10 +88,5 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
 
         cursor.close()
         return sms
-    }
-
-    override fun startTextServer() {
-        val sms = getTexts()
-        sms.forEach { s: Text -> Log.d(TAG, s.toString()) }
     }
 }
