@@ -45,7 +45,7 @@ class MainViewImpl constructor(val act: AppCompatActivity,
     override fun onServerStart(code: String) {
         bannerText.text = code
         initButton.text = act.getString(R.string.button_init_stop)
-        showSnackbar("Open https://texts.sixth.io")
+        showSnackbar(act.getString(R.string.text_server_start))
     }
 
     override fun showSnackbar(text: String) {

@@ -1,10 +1,6 @@
 package io.sixth.sharetext.server
 
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.koushikdutta.async.http.server.AsyncHttpServer
-import io.sixth.sharetext.R
 import io.sixth.sharetext.data.JsonText
 import io.sixth.sharetext.data.RandomCode
 import io.sixth.sharetext.data.Text
