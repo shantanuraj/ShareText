@@ -25,9 +25,10 @@ class MainActivity : AppCompatActivity() {
         mainView = MainViewImpl(this, sms, server)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         server.stop()
+        mainView.onServerStop()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,

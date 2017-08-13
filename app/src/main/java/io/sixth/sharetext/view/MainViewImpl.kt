@@ -31,9 +31,7 @@ class MainViewImpl constructor(val act: AppCompatActivity,
 
     fun stopServer() {
         server.stop()
-        bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
-        bannerText.text = act.getString(R.string.text_banner_prompt)
-        initButton.text = act.getString(R.string.button_init_start)
+        onServerStop()
     }
 
     override fun onServerStart(code: String) {
@@ -41,6 +39,12 @@ class MainViewImpl constructor(val act: AppCompatActivity,
         bannerText.text = code
         initButton.text = act.getString(R.string.button_init_stop)
         showSnackbar(act.getString(R.string.text_server_start))
+    }
+
+    override fun onServerStop() {
+        bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
+        bannerText.text = act.getString(R.string.text_banner_prompt)
+        initButton.text = act.getString(R.string.button_init_start)
     }
 
     override fun onInitClick() {
