@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startTextServer() {
-        if (smsReader.hasSMSPermission()) {
+        if (!server.isRunning() && smsReader.hasSMSPermission()) {
             server.start(smsReader.getTexts())
         } else {
             smsReader.requestSMSPermission()

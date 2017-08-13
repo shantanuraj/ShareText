@@ -8,4 +8,5 @@ import io.sixth.sharetext.data.Text
 interface Server {
     fun start(texts: List<Text>)
     fun stop()
+    fun isRunning(): Boolean
 }
