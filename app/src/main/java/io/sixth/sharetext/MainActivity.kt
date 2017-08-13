@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         mainView = MainViewImpl(this, sms, server)
     }
 
+    override fun onStop() {
+        super.onStop()
+        server.stop()
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         sms.requestSMSPermissionResult(requestCode, permissions, grantResults)
