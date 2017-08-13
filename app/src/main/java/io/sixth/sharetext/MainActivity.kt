@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        server = ServerImpl()
+        server = ServerImpl(this)
         smsReader = SmsReaderImpl(this, server)
         setContentView(R.layout.activity_main)
         initButton = findViewById(R.id.init_button)
