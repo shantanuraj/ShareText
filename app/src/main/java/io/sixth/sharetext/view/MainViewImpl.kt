@@ -19,6 +19,11 @@ class MainViewImpl constructor(val act: AppCompatActivity,
     val rootView = act.findViewById<ConstraintLayout>(R.id.main_root_view)!!
     val bannerText = act.findViewById<TextView>(R.id.text_banner)!!
 
+    val defaultTextSize: Float
+        get() {
+            return bannerText.textSize / act.resources.displayMetrics.density
+        }
+
     init {
         initButton.setOnClickListener { onInitClick() }
     }
@@ -30,8 +35,16 @@ class MainViewImpl constructor(val act: AppCompatActivity,
 
     fun stopServer() {
         server.stop()
+        bannerText.textSize = defaultTextSize
         bannerText.text = act.getString(R.string.text_banner_prompt)
         initButton.text = act.getString(R.string.button_init_start)
+    }
+
+    override fun onServerStart(code: String) {
+        bannerText.text = code
+        bannerText.textSize = act.resources.getDimension(R.dimen.large_text)
+        initButton.text = act.getString(R.string.button_init_stop)
+        showSnackbar(act.getString(R.string.text_server_start))
     }
 
     override fun onInitClick() {
@@ -40,12 +53,6 @@ class MainViewImpl constructor(val act: AppCompatActivity,
             sms.hasSMSPermission() -> startServer()
             else -> sms.requestSMSPermission({ startServer() })
         }
-    }
-
-    override fun onServerStart(code: String) {
-        bannerText.text = code
-        initButton.text = act.getString(R.string.button_init_stop)
-        showSnackbar(act.getString(R.string.text_server_start))
     }
 
     override fun showSnackbar(text: String) {
