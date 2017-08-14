@@ -18,7 +18,11 @@ class ServerImpl : Server {
     val FORBIDDEN_CODE = 403
     val OPTIONS = "OPTIONS"
     val OK = "ok"
-    var CODE_HEADER = "x-text-code"
+    val CODE_HEADER = "x-text-code"
+    val METHODS_HEADER = "Access-Control-Allow-Methods"
+    val ORIGINS_HEADER = "Access-Control-Allow-Origin"
+    val ALL_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"
+    val ALL_ORIGINS = "*"
     val server: AsyncHttpServer = AsyncHttpServer()
 
     var code = ""
@@ -38,6 +42,9 @@ class ServerImpl : Server {
     fun authMiddleware(request: AsyncHttpServerRequest,
                        response: AsyncHttpServerResponse): Boolean {
         val codeHeader = request.headers.get(CODE_HEADER)
+
+        response.headers.set(METHODS_HEADER, ALL_METHODS)
+        response.headers.set(ORIGINS_HEADER, ALL_ORIGINS)
 
         return when {
             request.method == OPTIONS -> {
