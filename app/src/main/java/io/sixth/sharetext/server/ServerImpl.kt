@@ -16,6 +16,8 @@ class ServerImpl : Server {
     val PORT = 3210
     val FORBIDDEN = "Forbidden"
     val FORBIDDEN_CODE = 403
+    val OPTIONS = "OPTIONS"
+    val OK = "ok"
     var CODE_HEADER = "x-text-code"
     val server: AsyncHttpServer = AsyncHttpServer()
 
@@ -23,6 +25,9 @@ class ServerImpl : Server {
     var isActive = false
 
     init {
+        server.addAction(OPTIONS, "/*", { req, res ->
+            authMiddleware(req, res)
+        })
         server.get("/", { req, res ->
             when {
                 authMiddleware(req, res) -> res.send("ShareText server")
@@ -33,12 +38,18 @@ class ServerImpl : Server {
     fun authMiddleware(request: AsyncHttpServerRequest,
                        response: AsyncHttpServerResponse): Boolean {
         val codeHeader = request.headers.get(CODE_HEADER)
-        if (codeHeader != null && codeHeader == code) {
-            return true
-        } else {
-            response.code(FORBIDDEN_CODE)
-            response.send(FORBIDDEN)
-            return false
+
+        return when {
+            request.method == OPTIONS -> {
+                response.send(OK)
+                false
+            }
+            (codeHeader != null && codeHeader == code) -> true
+            else -> {
+                response.code(FORBIDDEN_CODE)
+                response.send(FORBIDDEN)
+                false
+            }
         }
     }
 
