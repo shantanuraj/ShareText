@@ -30,7 +30,7 @@ class ServerImpl : Server {
         })
         server.get("/", { req, res ->
             when {
-                authMiddleware(req, res) -> res.send("ShareText server")
+                authMiddleware(req, res) -> res.send(code)
             }
         })
     }
