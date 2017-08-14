@@ -21,6 +21,7 @@ class ServerImpl : Server {
     val CODE_HEADER = "x-text-code"
     val METHODS_HEADER = "Access-Control-Allow-Methods"
     val ORIGINS_HEADER = "Access-Control-Allow-Origin"
+    val HEADERS_HEADER = "Access-Control-Allow-Headers"
     val ALL_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"
     val ALL_ORIGINS = "*"
     val server: AsyncHttpServer = AsyncHttpServer()
@@ -45,6 +46,7 @@ class ServerImpl : Server {
 
         response.headers.set(METHODS_HEADER, ALL_METHODS)
         response.headers.set(ORIGINS_HEADER, ALL_ORIGINS)
+        response.headers.set(HEADERS_HEADER, CODE_HEADER)
 
         return when {
             request.method == OPTIONS -> {
