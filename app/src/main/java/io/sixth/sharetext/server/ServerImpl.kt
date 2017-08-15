@@ -1,6 +1,5 @@
 package io.sixth.sharetext.server
 
-import android.util.Log
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
@@ -30,7 +29,7 @@ class ServerImpl : Server {
     var isActive = false
 
     init {
-        server.addAction(OPTIONS, "/*", { req, res ->
+        server.addAction(OPTIONS, "\\S+", { req, res ->
             authMiddleware(req, res)
         })
         server.get("/", { req, res ->
