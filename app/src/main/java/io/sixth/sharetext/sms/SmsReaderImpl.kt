@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.sixth.sharetext.data.Text
-import io.sixth.sharetext.view.MainView
 
 /**
  * Created by eve on 13/08/17.
@@ -17,9 +16,11 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
 
     val APP_REQUEST_READ_SMS: Int = 0x100
     // Cursor position constants
-    val CURSOR_SENDER   = 0
+    val CURSOR_ADDRESS  = 0
     val CURSOR_DATE     = 1
     val CURSOR_BODY     = 2
+    val CURSOR_THREAD   = 3
+    val CURSOR_TYPE     = 4
     // Callback for sms permission grant action
     var cb: () -> Unit = {}
 
@@ -72,7 +73,10 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
         val cursor = act.contentResolver.query(Telephony.Sms.CONTENT_URI,
                 arrayOf(Telephony.Sms.Inbox.ADDRESS,
                         Telephony.Sms.Inbox.DATE,
-                        Telephony.Sms.Inbox.BODY),
+                        Telephony.Sms.Inbox.BODY,
+                        Telephony.Sms.Inbox.THREAD_ID,
+                        Telephony.Sms.Inbox.TYPE
+                        ),
                 null,
                 null,
                 Telephony.Sms.Inbox.DEFAULT_SORT_ORDER)
@@ -80,9 +84,11 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 sms.add(Text(
-                        cursor.getString(CURSOR_SENDER),
+                        cursor.getString(CURSOR_ADDRESS),
                         cursor.getLong(CURSOR_DATE),
-                        cursor.getString(CURSOR_BODY)
+                        cursor.getString(CURSOR_BODY),
+                        cursor.getString(CURSOR_THREAD),
+                        cursor.getInt(CURSOR_TYPE) == 2
                 ))
                 cursor.moveToNext()
             }

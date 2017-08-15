@@ -9,9 +9,11 @@ import org.json.JSONObject
 internal object JsonText {
     fun parse(text: Text): JSONObject {
         val json = JSONObject()
-        json.put("sender", text.sender)
+        json.put("thread", text.thread)
+        json.put("address", text.address)
         json.put("message", text.message)
         json.put("date", text.date)
+        json.put("sent", text.sent)
         return json
     }
 
