@@ -6,5 +6,5 @@ package io.sixth.sharetext.data
 data class Text(val address: String,
                 val date: Long,
                 val message: String,
-                val thread: String,
+                val thread: Int,
                 val sent: Boolean)

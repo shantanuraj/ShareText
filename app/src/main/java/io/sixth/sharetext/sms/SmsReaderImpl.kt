@@ -75,8 +75,7 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
                         Telephony.Sms.Inbox.DATE,
                         Telephony.Sms.Inbox.BODY,
                         Telephony.Sms.Inbox.THREAD_ID,
-                        Telephony.Sms.Inbox.TYPE
-                        ),
+                        Telephony.Sms.Inbox.TYPE),
                 null,
                 null,
                 Telephony.Sms.Inbox.DEFAULT_SORT_ORDER)
@@ -87,7 +86,7 @@ class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
                         cursor.getString(CURSOR_ADDRESS),
                         cursor.getLong(CURSOR_DATE),
                         cursor.getString(CURSOR_BODY),
-                        cursor.getString(CURSOR_THREAD),
+                        cursor.getInt(CURSOR_THREAD),
                         cursor.getInt(CURSOR_TYPE) == 2
                 ))
                 cursor.moveToNext()
