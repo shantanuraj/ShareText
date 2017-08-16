@@ -40,10 +40,12 @@ class MainViewImpl constructor(private val act: AppCompatActivity,
     }
 
     override fun onServerStart(code: String) {
+        val serverAddress = "${wifi.getLocalIP()}:${server.getPort()}"
+
         bannerText.textSize = act.resources.getDimension(R.dimen.large_text)
         bannerText.text = code
         initButton.text = act.getString(R.string.button_init_stop)
-        localIPText.text = wifi.getLocalIP()
+        localIPText.text = serverAddress
         showSnackbar(act.getString(R.string.text_server_start))
     }
 

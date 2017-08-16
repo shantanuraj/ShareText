@@ -8,5 +8,6 @@ import io.sixth.sharetext.data.Text
 interface Server {
     fun start(getTexts: () -> List<Text>): String
     fun stop()
+    fun getPort(): Int
     fun isRunning(): Boolean
 }

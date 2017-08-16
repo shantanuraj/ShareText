@@ -83,4 +83,8 @@ class ServerImpl : Server {
     override fun isRunning(): Boolean {
         return isActive
     }
+
+    override fun getPort(): Int {
+        return PORT
+    }
 }
