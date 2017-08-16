@@ -1,5 +1,6 @@
 package io.sixth.sharetext.server
 
+import com.koushikdutta.async.AsyncServerSocket
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
@@ -13,7 +14,6 @@ import io.sixth.sharetext.data.Text
  */
 class ServerImpl : Server {
 
-    private val PORT = RandomPort.port
     private val FORBIDDEN = "Forbidden"
     private val FORBIDDEN_CODE = 403
     private val OPTIONS = "OPTIONS"
@@ -26,6 +26,7 @@ class ServerImpl : Server {
     private val ALL_ORIGINS = "*"
     private val server: AsyncHttpServer = AsyncHttpServer()
 
+    private var port = 0
     private var code = ""
     private var isActive = false
 
@@ -38,6 +39,15 @@ class ServerImpl : Server {
                 authMiddleware(req, res) -> res.send(code)
             }
         })
+    }
+
+    private fun startServer(): AsyncServerSocket {
+        return try {
+            port = RandomPort.port
+            server.listen(port)
+        } catch (ex: Exception) {
+            startServer()
+        }
     }
 
     private fun authMiddleware(request: AsyncHttpServerRequest,
@@ -68,7 +78,7 @@ class ServerImpl : Server {
                 authMiddleware(req, res) -> res.send(JsonText.parse(getTexts()))
             }
         })
-        server.listen(PORT)
+        startServer()
         isActive = true
         code = RandomCode.code
         return code
@@ -85,6 +95,6 @@ class ServerImpl : Server {
     }
 
     override fun getPort(): Int {
-        return PORT
+        return port
     }
 }
