@@ -8,16 +8,19 @@ import android.widget.TextView
 import io.sixth.sharetext.R
 import io.sixth.sharetext.server.Server
 import io.sixth.sharetext.sms.SmsReader
+import io.sixth.sharetext.wifi.WiFi
 
 /**
  * Created by eve on 13/08/17.
  */
 class MainViewImpl constructor(private val act: AppCompatActivity,
                                private val sms: SmsReader,
-                               private val server: Server): MainView {
+                               private val server: Server,
+                               private val wifi: WiFi): MainView {
     private val rootView = act.findViewById<ConstraintLayout>(R.id.main_root_view)!!
     private val initButton = act.findViewById<Button>(R.id.init_button)!!
     private val bannerText = act.findViewById<TextView>(R.id.text_banner)!!
+    private val localIPText = act.findViewById<TextView>(R.id.text_local_ip)!!
 
     init {
         bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
@@ -40,6 +43,7 @@ class MainViewImpl constructor(private val act: AppCompatActivity,
         bannerText.textSize = act.resources.getDimension(R.dimen.large_text)
         bannerText.text = code
         initButton.text = act.getString(R.string.button_init_stop)
+        localIPText.text = wifi.getLocalIP()
         showSnackbar(act.getString(R.string.text_server_start))
     }
 
@@ -47,6 +51,7 @@ class MainViewImpl constructor(private val act: AppCompatActivity,
         bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
         bannerText.text = act.getString(R.string.text_banner_prompt)
         initButton.text = act.getString(R.string.button_init_start)
+        localIPText.text = ""
     }
 
     override fun onInitClick() {
