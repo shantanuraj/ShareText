@@ -39,8 +39,8 @@ class ServerImpl : Server {
         })
     }
 
-    fun authMiddleware(request: AsyncHttpServerRequest,
-                       response: AsyncHttpServerResponse): Boolean {
+    private fun authMiddleware(request: AsyncHttpServerRequest,
+                               response: AsyncHttpServerResponse): Boolean {
         val codeHeader = request.headers.get(CODE_HEADER)
 
         response.headers.set(METHODS_HEADER, ALL_METHODS)
@@ -61,11 +61,11 @@ class ServerImpl : Server {
         }
     }
 
-    override fun start(texts: List<Text>): String {
-        val jsonTexts = JsonText.parse(texts)
+    override fun start(getTexts: () -> List<Text>): String {
+
         server.get("/texts", { req, res ->
             when {
-                authMiddleware(req, res) -> res.send(jsonTexts)
+                authMiddleware(req, res) -> res.send(JsonText.parse(getTexts()))
             }
         })
         server.listen(PORT)

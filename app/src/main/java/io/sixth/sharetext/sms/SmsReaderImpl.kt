@@ -12,15 +12,15 @@ import io.sixth.sharetext.data.Text
 /**
  * Created by eve on 13/08/17.
  */
-class SmsReaderImpl constructor(val act: AppCompatActivity) : SmsReader {
+class SmsReaderImpl constructor(private val act: AppCompatActivity) : SmsReader {
 
-    val APP_REQUEST_READ_SMS: Int = 0x100
+    private val APP_REQUEST_READ_SMS: Int = 0x100
     // Cursor position constants
-    val CURSOR_ADDRESS  = 0
-    val CURSOR_DATE     = 1
-    val CURSOR_BODY     = 2
-    val CURSOR_THREAD   = 3
-    val CURSOR_TYPE     = 4
+    private val CURSOR_ADDRESS  = 0
+    private val CURSOR_DATE     = 1
+    private val CURSOR_BODY     = 2
+    private val CURSOR_THREAD   = 3
+    private val CURSOR_TYPE     = 4
     // Callback for sms permission grant action
     var cb: () -> Unit = {}
 

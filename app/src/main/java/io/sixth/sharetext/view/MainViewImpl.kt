@@ -12,24 +12,26 @@ import io.sixth.sharetext.sms.SmsReader
 /**
  * Created by eve on 13/08/17.
  */
-class MainViewImpl constructor(val act: AppCompatActivity,
-                               val sms: SmsReader,
-                               val server: Server): MainView {
-    val rootView = act.findViewById<ConstraintLayout>(R.id.main_root_view)!!
-    val initButton = act.findViewById<Button>(R.id.init_button)!!
-    val bannerText = act.findViewById<TextView>(R.id.text_banner)!!
+class MainViewImpl constructor(private val act: AppCompatActivity,
+                               private val sms: SmsReader,
+                               private val server: Server): MainView {
+    private val rootView = act.findViewById<ConstraintLayout>(R.id.main_root_view)!!
+    private val initButton = act.findViewById<Button>(R.id.init_button)!!
+    private val bannerText = act.findViewById<TextView>(R.id.text_banner)!!
 
     init {
         bannerText.textSize = act.resources.getDimension(R.dimen.regular_text)
         initButton.setOnClickListener { onInitClick() }
     }
 
-    fun startServer() {
-        val code = server.start(sms.getTexts())
+    private fun startServer() {
+        val code = server.start({
+            sms.getTexts()
+        })
         onServerStart(code)
     }
 
-    fun stopServer() {
+    private fun stopServer() {
         server.stop()
         onServerStop()
     }

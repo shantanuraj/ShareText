@@ -12,9 +12,9 @@ import io.sixth.sharetext.view.MainViewImpl
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var sms: SmsReader
-    lateinit var server: Server
-    lateinit var mainView: MainView
+    private lateinit var sms: SmsReader
+    private lateinit var server: Server
+    private lateinit var mainView: MainView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
