@@ -7,7 +7,7 @@ import org.json.JSONObject
  * Created by eve on 13/08/17.
  */
 internal object JsonText {
-    fun parse(text: Text): JSONObject {
+    private fun parse(text: Text): JSONObject {
         val json = JSONObject()
         json.put("thread", text.thread)
         json.put("address", text.address)

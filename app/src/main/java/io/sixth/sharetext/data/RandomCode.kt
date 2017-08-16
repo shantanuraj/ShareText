@@ -7,9 +7,9 @@ import java.security.SecureRandom
  */
 internal object RandomCode {
 
-    val CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray()
-    val LENGTH = 4
-    val Random = SecureRandom()
+    private val CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray()
+    private val LENGTH = 4
+    private val Random = SecureRandom()
 
     val code: String
         get() {

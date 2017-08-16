@@ -5,6 +5,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
 import io.sixth.sharetext.data.JsonText
 import io.sixth.sharetext.data.RandomCode
+import io.sixth.sharetext.data.RandomPort
 import io.sixth.sharetext.data.Text
 
 /**
@@ -12,21 +13,21 @@ import io.sixth.sharetext.data.Text
  */
 class ServerImpl : Server {
 
-    val PORT = 3210
-    val FORBIDDEN = "Forbidden"
-    val FORBIDDEN_CODE = 403
-    val OPTIONS = "OPTIONS"
-    val OK = "ok"
-    val CODE_HEADER = "x-text-code"
-    val METHODS_HEADER = "Access-Control-Allow-Methods"
-    val ORIGINS_HEADER = "Access-Control-Allow-Origin"
-    val HEADERS_HEADER = "Access-Control-Allow-Headers"
-    val ALL_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"
-    val ALL_ORIGINS = "*"
-    val server: AsyncHttpServer = AsyncHttpServer()
+    private val PORT = RandomPort.port
+    private val FORBIDDEN = "Forbidden"
+    private val FORBIDDEN_CODE = 403
+    private val OPTIONS = "OPTIONS"
+    private val OK = "ok"
+    private val CODE_HEADER = "x-text-code"
+    private val METHODS_HEADER = "Access-Control-Allow-Methods"
+    private val ORIGINS_HEADER = "Access-Control-Allow-Origin"
+    private val HEADERS_HEADER = "Access-Control-Allow-Headers"
+    private val ALL_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE"
+    private val ALL_ORIGINS = "*"
+    private val server: AsyncHttpServer = AsyncHttpServer()
 
-    var code = ""
-    var isActive = false
+    private var code = ""
+    private var isActive = false
 
     init {
         server.addAction(OPTIONS, "\\S+", { req, res ->
@@ -62,7 +63,6 @@ class ServerImpl : Server {
     }
 
     override fun start(getTexts: () -> List<Text>): String {
-
         server.get("/texts", { req, res ->
             when {
                 authMiddleware(req, res) -> res.send(JsonText.parse(getTexts()))
