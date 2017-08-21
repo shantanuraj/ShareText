@@ -9,7 +9,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "io.sixth.sharetext"
-        minSdkVersion 25
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
