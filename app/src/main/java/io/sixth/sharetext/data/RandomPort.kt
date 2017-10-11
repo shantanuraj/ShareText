@@ -12,6 +12,6 @@ internal object RandomPort {
     val port: Int
         get() {
             val index = Random.nextInt(65535 - 1024)
-            return PORTS[1024 + index]
+            return 1024 + index
         }
 }
