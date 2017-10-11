@@ -7,12 +7,11 @@ import java.security.SecureRandom
  */
 internal object RandomPort {
 
-    private val PORTS = (1024..65535).toList()
     private val Random = SecureRandom()
 
     val port: Int
         get() {
-            val index = Random.nextInt(PORTS.size)
-            return PORTS[index]
+            val index = Random.nextInt(65535 - 1024)
+            return PORTS[1024 + index]
         }
 }
